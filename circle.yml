@@ -30,7 +30,7 @@ deployment:
       # Publish official images with a specific tag.
       - ./publish.sh ${TAG1}
       # Publish stable branch with "latest" tag.
-      - smitty docker tag -f quay.io/jumanjiman/testssl:2.6 quay.io/jumanjiman/testssl:latest
+      - docker tag -f quay.io/jumanjiman/testssl:2.6 quay.io/jumanjiman/testssl:latest
       - docker logout quay.io
   pulls:
     branch: /^(?!master).*$/
