@@ -26,10 +26,16 @@ deployment:
     branch: master
     owner: jumanjihouse
     commands:
+      - docker login -e ${mail} -u ${user} -p ${pass} quay.io
       # Publish official images with a specific tag.
       - ./publish.sh ${TAG1}
+      # Publish stable branch with "latest" tag.
+      - smitty docker tag -f quay.io/jumanjiman/testssl:2.6 quay.io/jumanjiman/testssl:latest
+      - docker logout quay.io
   pulls:
     branch: /^(?!master).*$/
     commands:
+      - docker login -e ${mail} -u ${user} -p ${pass} quay.io
       # Publish the images with TAG2 so user can smoke-test manually.
       - ./publish.sh ${TAG2}
+      - docker logout quay.io

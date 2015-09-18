@@ -20,8 +20,6 @@ smitty() {
   eval $@
 }
 
-docker login -e ${mail} -u ${user} -p ${pass} quay.io
-
 for build_tag in ${build_tags}; do
   echo "===== ${build_tag} ====="
   for suffix in ${suffixes}; do
@@ -38,5 +36,3 @@ for build_tag in ${build_tags}; do
     echo
   done
 done
-
-docker logout quay.io
