@@ -1,5 +1,10 @@
 # https://circleci.com/docs/docker
 machine:
+  environment:
+    # TAG1 is for master branch aka official images.
+    TAG1: $(date +%Y%m%dT%H%M)-git-${CIRCLE_SHA1:0:7}
+    # TAG2 is for pull requests.
+    TAG2: ${CIRCLE_PR_USERNAME}_${CIRCLE_BRANCH/\//_}
   services:
     - docker
 
@@ -13,3 +18,18 @@ dependencies:
 test:
   override:
     - make test
+
+# https://circleci.com/docs/configuration#deployment
+# https://circleci.com/docs/environment-variables
+deployment:
+  master:
+    branch: master
+    owner: jumanjihouse
+    commands:
+      # Publish official images with a specific tag.
+      - ./publish.sh ${TAG1}
+  pulls:
+    branch: /^(?!master).*$/
+    commands:
+      # Publish the images with TAG2 so user can smoke-test manually.
+      - ./publish.sh ${TAG2}
