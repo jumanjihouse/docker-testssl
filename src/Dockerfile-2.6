@@ -1,0 +1,6 @@
+FROM testssl:base
+
+ENV BRANCH 2.6
+
+RUN curl -L -O https://raw.githubusercontent.com/drwetter/testssl.sh/${BRANCH}/testssl.sh && \
+    chmod 0755 testssl.sh
