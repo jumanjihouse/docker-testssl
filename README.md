@@ -3,6 +3,12 @@ Test TLS/SSL of arbitrary services and ports
 
 Build status for master branch: [![Circle CI](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master.svg?style=svg&circle-token=21344117bb3bc61b8096a1a1b76514ab7b8a3f85)](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master)
 
+Docker image: https://quay.io/repository/jumanjiman/testssl
+
+Docker source: https://github.com/jumanjihouse/docker-testssl
+
+Upstream source: https://github.com/drwetter/testssl.sh
+
 
 How-To
 ------
