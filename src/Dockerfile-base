@@ -9,20 +9,14 @@ RUN apk --update-cache upgrade && \
       && \
     rm -f /var/cache/apk/*
 
-# Install packages built on CircleCI from
-# https://github.com/jumanjiman/alpine-pkg-openssl
-# since these packages enable to exercise the
-# complete testssl.sh suite, unlike stock openssl.
-ENV BUILD_NUMBER 6
-RUN curl -L -O https://circle-artifacts.com/gh/jumanjiman/alpine-pkg-openssl/${BUILD_NUMBER}/artifacts/0/home/ubuntu/alpine-pkg-openssl/packages/x86_64/libcrypto-chacha-1.0.2e-r0.apk && \
-    curl -L -O https://circle-artifacts.com/gh/jumanjiman/alpine-pkg-openssl/${BUILD_NUMBER}/artifacts/0/home/ubuntu/alpine-pkg-openssl/packages/x86_64/libssl-chacha-1.0.2e-r0.apk && \
-    curl -L -O https://circle-artifacts.com/gh/jumanjiman/alpine-pkg-openssl/${BUILD_NUMBER}/artifacts/0/home/ubuntu/alpine-pkg-openssl/packages/x86_64/openssl-chacha-1.0.2e-r0.apk && \
-    apk add --update --upgrade --allow-untrusted \
-      libcrypto-chacha-1.0.2e-r0.apk \
-      libssl-chacha-1.0.2e-r0.apk \
-      openssl-chacha-1.0.2e-r0.apk \
-      && \
-    rm -f /var/cache/apk/*
+# Use the statically-compiled version of openssl from
+# https://testssl.sh/
+RUN cd /tmp/ && \
+    curl -L -O https://testssl.sh/openssl-1.0.2e-chacha.pm.tar.gz && \
+    tar xvzf openssl-1.0.2e-chacha.pm.tar.gz && \
+    cp -f bin/openssl.Linux.x86_64 /usr/bin/openssl && \
+    rm -f openssl-1.0.2e-chacha.pm.tar.gz && \
+    rm -fr bin/
 
 ENTRYPOINT ["/testssl.sh"]
 CMD ["-h"]
