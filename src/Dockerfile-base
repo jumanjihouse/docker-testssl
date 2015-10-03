@@ -6,9 +6,23 @@ RUN apk --update-cache upgrade && \
       bind-tools \
       curl \
       ncurses \
-      openssl \
       && \
-    rm -fr /var/cache/apk
+    rm -f /var/cache/apk/*
+
+# Install packages built on CircleCI from
+# https://github.com/jumanjiman/alpine-pkg-openssl
+# since these packages enable to exercise the
+# complete testssl.sh suite, unlike stock openssl.
+ENV BUILD_NUMBER 6
+RUN curl -L -O https://circle-artifacts.com/gh/jumanjiman/alpine-pkg-openssl/${BUILD_NUMBER}/artifacts/0/home/ubuntu/alpine-pkg-openssl/packages/x86_64/libcrypto-chacha-1.0.2e-r0.apk && \
+    curl -L -O https://circle-artifacts.com/gh/jumanjiman/alpine-pkg-openssl/${BUILD_NUMBER}/artifacts/0/home/ubuntu/alpine-pkg-openssl/packages/x86_64/libssl-chacha-1.0.2e-r0.apk && \
+    curl -L -O https://circle-artifacts.com/gh/jumanjiman/alpine-pkg-openssl/${BUILD_NUMBER}/artifacts/0/home/ubuntu/alpine-pkg-openssl/packages/x86_64/openssl-chacha-1.0.2e-r0.apk && \
+    apk add --update --upgrade --allow-untrusted \
+      libcrypto-chacha-1.0.2e-r0.apk \
+      libssl-chacha-1.0.2e-r0.apk \
+      openssl-chacha-1.0.2e-r0.apk \
+      && \
+    rm -f /var/cache/apk/*
 
 ENTRYPOINT ["/testssl.sh"]
 CMD ["-h"]
