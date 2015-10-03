@@ -29,8 +29,8 @@ deployment:
       - docker login -e ${mail} -u ${user} -p ${pass} quay.io
       # Publish official images with a specific tag.
       - ./publish.sh ${TAG1}
-      # Publish stable branch with "latest" tag.
-      - docker tag -f testssl:2.6 quay.io/jumanjiman/testssl:latest
+      # Publish with "latest" tag.
+      - docker tag -f testssl:master quay.io/jumanjiman/testssl:latest
       - docker push quay.io/jumanjiman/testssl:latest
       - docker logout quay.io
   pulls:

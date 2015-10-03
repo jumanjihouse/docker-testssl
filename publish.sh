@@ -12,7 +12,6 @@ suffixes=$@
 # The names of the images as built.
 build_tags="
 testssl:master
-testssl:2.6
 "
 
 smitty() {
