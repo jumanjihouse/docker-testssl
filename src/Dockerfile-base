@@ -20,5 +20,8 @@ RUN cd /tmp/ && \
     rm -f openssl-1.0.2e-chacha.pm.tar.gz && \
     rm -fr bin/
 
+# Install RFC mapping file.
+RUN curl -L -o /etc/mapping-rfc.txt https://testssl.sh/mapping-rfc.txt
+
 ENTRYPOINT ["/testssl.sh"]
 CMD ["-h"]
