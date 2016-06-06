@@ -1,11 +1,13 @@
-FROM alpine:3.2
+FROM alpine:3.4
 
 RUN apk --update-cache upgrade && \
     apk add \
       bash \
       bind-tools \
+      coreutils \
       curl \
       ncurses \
+      tzdata \
       && \
     rm -f /var/cache/apk/*
 
@@ -17,6 +19,9 @@ RUN cd /tmp/ && \
     cp -f bin/openssl.Linux.x86_64 /usr/bin/openssl && \
     rm -f openssl-1.0.2e-chacha.pm.tar.gz && \
     rm -fr bin/
+
+# Install RFC mapping file.
+RUN curl -L -o /etc/mapping-rfc.txt https://testssl.sh/mapping-rfc.txt
 
 ENTRYPOINT ["/testssl.sh"]
 CMD ["-h"]
