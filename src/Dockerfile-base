@@ -4,8 +4,10 @@ RUN apk --update-cache upgrade && \
     apk add \
       bash \
       bind-tools \
+      coreutils \
       curl \
       ncurses \
+      tzdata \
       && \
     rm -f /var/cache/apk/*
 
