@@ -54,4 +54,5 @@ Quay registry: [http://status.quay.io/](http://status.quay.io/)
 License
 -------
 
+This repo, testssl, and openssl are licensed under the GPLv2.
 See [LICENSE](LICENSE).

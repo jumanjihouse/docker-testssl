@@ -1,5 +1,7 @@
 FROM alpine:3.4
 
+ENV TARBALL="openssl-1.0.2i-chacha.pm.ipv6.Linux+FreeBSD.tar.gz"
+
 RUN apk --update-cache upgrade && \
     apk add \
       bash \
@@ -14,10 +16,10 @@ RUN apk --update-cache upgrade && \
 # Use the statically-compiled version of openssl from
 # https://testssl.sh/
 RUN cd /tmp/ && \
-    curl -L -O https://testssl.sh/openssl-1.0.2e-chacha.pm.tar.gz && \
-    tar xvzf openssl-1.0.2e-chacha.pm.tar.gz && \
+    curl -L -O https://testssl.sh/${TARBALL} && \
+    tar xvzf ${TARBALL} && \
     cp -f bin/openssl.Linux.x86_64 /usr/bin/openssl && \
-    rm -f openssl-1.0.2e-chacha.pm.tar.gz && \
+    rm -f ${TARBALL} && \
     rm -fr bin/
 
 # Install RFC mapping file.
