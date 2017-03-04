@@ -21,4 +21,4 @@ test:
 	@echo '====> Test that images have correct versions.'
 	docker run -it testssl:master --version | grep '^[[:space:]]*testssl.sh'
 	@echo '====> Test SSL of a website.'
-	docker run -t testssl:master https://login.ise.com
+	docker run -t testssl:master --ip one https://www.google.com/
