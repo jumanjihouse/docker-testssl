@@ -1,7 +1,7 @@
 all: build test
 
 .PHONY: build
-build: base master
+build: base 2.8 2.9dev
 
 .PHONY: base
 base:
@@ -9,16 +9,24 @@ base:
 	@echo '====> Build base image.'
 	docker build -t testssl:base -f src/Dockerfile-base src/
 
-.PHONY: master
-master:
+.PHONY: 2.8
+2.8:
 	@echo
-	@echo '====> Build image from branch "master".'
-	docker build -t testssl:master -f src/Dockerfile-master src/
+	@echo '====> Build image from branch "2.8".'
+	docker build -t testssl:2.8 --build-arg BRANCH=2.8 -f src/Dockerfile src/
+
+.PHONY: 2.9dev
+2.9dev:
+	@echo
+	@echo '====> Build image from branch "2.9dev".'
+	docker build -t testssl:2.9dev --build-arg BRANCH=2.9dev -f src/Dockerfile src/
 
 .PHONY: test
 test:
 	@echo
 	@echo '====> Test that images have correct versions.'
-	docker run -it testssl:master --version | grep '^[[:space:]]*testssl.sh'
+	docker run -it testssl:2.8    --version | grep '^[[:space:]]*testssl.sh.*2.8'
+	docker run -it testssl:2.9dev --version | grep '^[[:space:]]*testssl.sh.*2.9dev'
 	@echo '====> Test SSL of a website.'
-	docker run -t testssl:master --ip one https://www.google.com/
+	docker run -t testssl:2.8    --ip one https://www.google.com/
+	docker run -t testssl:2.9dev --ip one https://www.google.com/
