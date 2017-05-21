@@ -1,6 +1,6 @@
 FROM alpine:3.5
 
-ENV TARBALL="openssl-1.0.2i-chacha.pm.ipv6.Linux+FreeBSD.tar.gz"
+ENV TARBALL="https://testssl.sh/openssl-1.0.2k-chacha.pm.ipv6.Linux+FreeBSD.tar.gz"
 
 RUN apk --update-cache upgrade && \
     apk add \
