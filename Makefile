@@ -28,5 +28,5 @@ test:
 	docker run -it testssl:2.8    --version | grep '^[[:space:]]*testssl.sh.*2.8'
 	docker run -it testssl:2.9dev --version | grep '^[[:space:]]*testssl.sh.*2.9dev'
 	@echo '====> Test SSL of a website.'
-	docker run -t testssl:2.8    --ip one https://www.google.com/
-	docker run -t testssl:2.9dev --ip one https://www.google.com/
+	docker run -t testssl:2.8    --heartbleed --ip one https://www.google.com/
+	docker run -t testssl:2.9dev --heartbleed --ip one https://www.google.com/
