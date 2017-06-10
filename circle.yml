@@ -28,10 +28,4 @@ deployment:
     branch: master
     owner: jumanjihouse
     commands:
-      - docker login -e ${mail} -u ${user} -p ${pass} quay.io
-      # Publish official images with a specific tag.
       - ./publish.sh ${TAG1}
-      # Publish stable branch with "latest" tag.
-      - docker tag -f testssl:2.8 quay.io/jumanjiman/testssl:latest
-      - docker push quay.io/jumanjiman/testssl:latest
-      - docker logout quay.io
