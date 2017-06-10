@@ -16,7 +16,7 @@ smitty() {
   eval $@
 }
 
-docker login -e ${mail} -u ${user} -p ${pass} quay.io
+docker login -u ${user} -p ${pass} quay.io
 
 for build_tag in ${build_tags}; do
   echo "===== ${build_tag} ====="
