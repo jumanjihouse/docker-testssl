@@ -3,8 +3,6 @@ machine:
   environment:
     # TAG1 is for official images.
     TAG1: $(date +%Y%m%dT%H%M)-git-${CIRCLE_SHA1:0:7}
-    # TAG2 is for pull requests.
-    TAG2: ${CIRCLE_PR_USERNAME}_${CIRCLE_BRANCH/\//_}
   services:
     - docker
   pre:
@@ -36,11 +34,4 @@ deployment:
       # Publish stable branch with "latest" tag.
       - docker tag -f testssl:2.8 quay.io/jumanjiman/testssl:latest
       - docker push quay.io/jumanjiman/testssl:latest
-      - docker logout quay.io
-  pulls:
-    branch: /^(?!master).*$/
-    commands:
-      - docker login -e ${mail} -u ${user} -p ${pass} quay.io
-      # Publish the images with TAG2 so user can smoke-test manually.
-      - ./publish.sh ${TAG2}
       - docker logout quay.io
