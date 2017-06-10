@@ -3,39 +3,19 @@
 set -e
 
 . ci/vars
-suffixes=${TAG}
-
-# The names of the images as built.
-build_tags="
-testssl:2.8
-testssl:2.9dev
-"
-
-smitty() {
-  echo "[INFO] $@"
-  eval $@
-}
 
 docker login -u ${user} -p ${pass} quay.io
 
-for build_tag in ${build_tags}; do
-  echo "===== ${build_tag} ====="
-  for suffix in ${suffixes}; do
-    echo "-- ${suffix}"
+# Tag and push dev image.
+docker tag testssl:${DEV_BRANCH} quay.io/jumanjiman/testssl:${DEV_TAG}
+docker push quay.io/jumanjiman/testssl:${DEV_TAG}
 
-    new_name="quay.io/jumanjiman/${build_tag}-${suffix}"
+# Tag and push stable image.
+docker tag testssl:${STABLE_BRANCH} quay.io/jumanjiman/testssl:${STABLE_TAG}
+docker push quay.io/jumanjiman/testssl:${STABLE_TAG}
 
-    # Create a new tag.
-    smitty docker tag ${build_tag} ${new_name}
-
-    # Publish the tagged image.
-    smitty docker push ${new_name}
-    echo
-    echo
-  done
-done
-
-smitty docker tag testssl:2.8 quay.io/jumanjiman/testssl:latest
-smitty docker push quay.io/jumanjiman/testssl:latest
+# Tag and push stable image as "latest".
+docker tag testssl:${STABLE_BRANCH} quay.io/jumanjiman/testssl:latest
+docker push quay.io/jumanjiman/testssl:latest
 
 docker logout quay.io

@@ -1,0 +1,28 @@
+version: '2.1'
+
+services:
+  base: &base
+    image: testssl:base
+    build:
+      dockerfile: Dockerfile-base
+      context: src/
+    stdin_open: true
+    tty: true
+
+  stable: &stable
+    <<: *base
+    image: testssl:${STABLE_BRANCH}
+    build:
+      dockerfile: Dockerfile
+      context: src/
+      args:
+        - BRANCH=${STABLE_BRANCH}
+
+  dev: &dev
+    <<: *base
+    image: testssl:${DEV_BRANCH}
+    build:
+      dockerfile: Dockerfile
+      context: src/
+      args:
+        - BRANCH=${DEV_BRANCH}
