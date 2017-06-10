@@ -26,7 +26,7 @@ for build_tag in ${build_tags}; do
     new_name="quay.io/jumanjiman/${build_tag}-${suffix}"
 
     # Create a new tag.
-    smitty docker tag -f ${build_tag} ${new_name}
+    smitty docker tag ${build_tag} ${new_name}
 
     # Publish the tagged image.
     smitty docker push ${new_name}
@@ -35,7 +35,7 @@ for build_tag in ${build_tags}; do
   done
 done
 
-smitty docker tag -f testssl:2.8 quay.io/jumanjiman/testssl:latest
+smitty docker tag testssl:2.8 quay.io/jumanjiman/testssl:latest
 smitty docker push quay.io/jumanjiman/testssl:latest
 
 docker logout quay.io
