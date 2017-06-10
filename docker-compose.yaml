@@ -6,6 +6,10 @@ services:
     build:
       dockerfile: Dockerfile-base
       context: src/
+      args:
+        - BUILD_DATE
+        - CI_BUILD_URL
+        - VCS_REF
     stdin_open: true
     tty: true
 

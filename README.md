@@ -56,6 +56,24 @@ On a host, such as devenv:
     ci/test
 
 
+### View labels
+
+Each built image has labels that generally follow http://label-schema.org/
+
+We add a label, `ci-build-url`, that is not currently part of the schema.
+This extra label provides a permanent link to the CI build for the image.
+
+View the ci-build-url label on a built image:
+
+    docker inspect \
+      -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
+      quay.io/jumanjiman/testssl
+
+Query all the labels inside a built image:
+
+    docker inspect quay.io/jumanjiman/testssl | jq -M '.[].Config.Labels'
+
+
 ### Contribute
 
 Fork [this repo](https://github.com/jumanjihouse/docker-testssl)

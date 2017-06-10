@@ -21,3 +21,13 @@ docker run ${run_opts} testssl:${DEV_BRANCH}    --version | grep "^[[:space:]]*t
 echo '====> Test SSL of a website.'
 docker run ${run_opts} testssl:${STABLE_BRANCH} --heartbleed --ip one https://www.google.com/
 docker run ${run_opts} testssl:${DEV_BRANCH}    --heartbleed --ip one https://www.google.com/
+
+echo '====> Check labels.'
+if [ -n "${CIRCLECI}" ]; then
+  docker inspect \
+    -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
+    testssl:${STABLE_BRANCH} | grep circleci.com
+  docker inspect \
+    -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
+    testssl:${DEV_BRANCH} | grep circleci.com
+fi
