@@ -1,7 +1,5 @@
 FROM alpine:3.6
 
-ENV TARBALL="openssl-1.0.2k-chacha.pm.ipv6.Linux+FreeBSD.tar.gz"
-
 RUN apk --update-cache upgrade && \
     apk add \
       bash \
@@ -12,6 +10,9 @@ RUN apk --update-cache upgrade && \
       tzdata \
       && \
     rm -f /var/cache/apk/*
+
+# This variable is set in ci/build.
+ARG TARBALL
 
 # Use the statically-compiled version of openssl from
 # https://testssl.sh/

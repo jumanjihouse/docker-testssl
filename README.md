@@ -44,6 +44,8 @@ CIS Docker Security Benchmarks:
 
 ### Build and test images locally
 
+:warning: All build configuration variables are in [`ci/build`](ci/build).
+
 On a host, such as devenv:
 
     # Optional. Your URL may vary.
@@ -78,6 +80,8 @@ Query all the labels inside a built image:
 
 Fork [this repo](https://github.com/jumanjihouse/docker-testssl)
 and see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+:warning: All build configuration variables are in [`ci/build`](ci/build).
 
 
 Operational status of SaaS providers

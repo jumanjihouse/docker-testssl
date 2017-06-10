@@ -9,6 +9,7 @@ services:
       args:
         - BUILD_DATE
         - CI_BUILD_URL
+        - TARBALL
         - VCS_REF
     stdin_open: true
     tty: true
