@@ -1,10 +1,23 @@
 #!/bin/sh
 set -e
 
+. ci/vars
+
+run_opts="
+-i
+-t
+--rm
+--read-only
+--cap-drop     all
+--memory       100M
+--pids-limit   1000
+--cpu-shares   512
+"
+
 echo '====> Test that images have correct versions.'
-docker run -it testssl:2.8    --version | grep '^[[:space:]]*testssl.sh.*2.8'
-docker run -it testssl:2.9dev --version | grep '^[[:space:]]*testssl.sh.*2.9dev'
+docker run ${run_opts} testssl:${STABLE_BRANCH} --version | grep "^[[:space:]]*testssl.sh.*${STABLE_BRANCH}"
+docker run ${run_opts} testssl:${DEV_BRANCH}    --version | grep "^[[:space:]]*testssl.sh.*${DEV_BRANCH}"
 
 echo '====> Test SSL of a website.'
-docker run -t testssl:2.8    --heartbleed --ip one https://www.google.com/
-docker run -t testssl:2.9dev --heartbleed --ip one https://www.google.com/
+docker run ${run_opts} testssl:${STABLE_BRANCH} --heartbleed --ip one https://www.google.com/
+docker run ${run_opts} testssl:${DEV_BRANCH}    --heartbleed --ip one https://www.google.com/

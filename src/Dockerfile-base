@@ -28,3 +28,7 @@ RUN curl -L -o /etc/mapping-rfc.txt https://testssl.sh/mapping-rfc.txt
 
 ENTRYPOINT ["/testssl.sh"]
 CMD ["-h"]
+
+# testssl.sh creates files here, so use a volume to
+# allow to run container with read-only root filesystem.
+VOLUME /tmp
