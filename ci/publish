@@ -2,12 +2,8 @@
 # vim: set sw=2 ts=2 ai et:
 set -e
 
-if [[ $# -lt 1 ]]; then
-  echo "ERR: you must pass 1 or more tags as arguments" >&2
-  exit 1
-fi
-
-suffixes=$@
+. ci/vars
+suffixes=${TAG}
 
 # The names of the images as built.
 build_tags="

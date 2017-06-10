@@ -31,10 +31,10 @@ On a host, such as devenv:
     export DOCKER_HOST=tcp://192.168.254.162:2375
 
     # Build images.
-    make build
+    ci/build
 
     # Run the tests.
-    make test
+    ci/test
 
 
 ### Contribute

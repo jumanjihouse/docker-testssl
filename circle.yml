@@ -1,8 +1,5 @@
 # https://circleci.com/docs/docker
 machine:
-  environment:
-    # TAG1 is for official images.
-    TAG1: $(date +%Y%m%dT%H%M)-git-${CIRCLE_SHA1:0:7}
   services:
     - docker
   pre:
@@ -15,11 +12,11 @@ dependencies:
     - docker info
     - docker version
   override:
-    - make build
+    - ci/build
 
 test:
   override:
-    - make test
+    - ci/test
 
 # https://circleci.com/docs/configuration#deployment
 # https://circleci.com/docs/environment-variables
@@ -28,4 +25,4 @@ deployment:
     branch: master
     owner: jumanjihouse
     commands:
-      - ./publish.sh ${TAG1}
+      - ci/publish
