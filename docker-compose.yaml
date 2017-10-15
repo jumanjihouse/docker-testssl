@@ -13,6 +13,12 @@ services:
         - VCS_REF
     stdin_open: true
     tty: true
+    read_only: true
+    mem_limit: 100M
+    pids_limit: 100
+    cpu_shares: 512
+    cap_drop:
+      - all
 
   stable: &stable
     <<: *base
