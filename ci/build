@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+. ci/helpers.sh
+
 cat > ci/vars <<-EOF
 # The version of openssl that we get from https://testssl.sh
 export TARBALL="openssl-1.0.2k-chacha.pm.ipv6.Linux+FreeBSD.201705.tar.gz"

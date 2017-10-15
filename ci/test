@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+. ci/helpers.sh
+
 . ci/vars
 
 echo '====> Test that images have correct versions.'
