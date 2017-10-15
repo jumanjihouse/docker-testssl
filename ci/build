@@ -8,7 +8,7 @@ cat > ci/vars <<-EOF
 export TARBALL="openssl-1.0.2k-chacha.pm.ipv6.Linux+FreeBSD.201705.tar.gz"
 
 # Branches from https://github.com/drwetter/testssl.sh
-export STABLE_BRANCH=2.8
+export STABLE_BRANCH=2.9.5
 export DEV_BRANCH=2.9dev
 
 # You probably do not need to touch these.
