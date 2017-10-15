@@ -3,7 +3,7 @@ set -e
 
 cat > ci/vars <<-EOF
 # The version of openssl that we get from https://testssl.sh
-export TARBALL="openssl-1.0.2k-chacha.pm.ipv6.Linux+FreeBSD.tar.gz"
+export TARBALL="openssl-1.0.2k-chacha.pm.ipv6.Linux+FreeBSD.201705.tar.gz"
 
 # Branches from https://github.com/drwetter/testssl.sh
 export STABLE_BRANCH=2.8
