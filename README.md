@@ -31,7 +31,7 @@ How-To
     --cpu-shares   512
     "
 
-    docker run ${run_opts} quay.io/jumanjiman/testssl -h
+    docker run ${run_opts} quay.io/jumanjiman/testssl --help
 
 The above example uses `--read-only` and `--cap-drop all` as recommended by the
 CIS Docker Security Benchmarks:
