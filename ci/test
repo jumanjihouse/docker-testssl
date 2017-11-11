@@ -30,7 +30,7 @@ docker inspect \
     testssl:${DEV_BRANCH} | grep "${VCS_REF}"
 
 # We only apply this label for hands-free builds in CI.
-if [ -n "${CIRCLECI:-}" ]; then
+if is_ci; then
   docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
     testssl:${STABLE_BRANCH} | grep circleci.com

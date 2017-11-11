@@ -29,5 +29,10 @@ finish() {
   fi
 }
 
+is_ci() {
+  # Are we running in hands-free CI?
+  [[ -n "${CIRCLECI:-}" ]]
+}
+
 # Traps.
 trap finish EXIT
