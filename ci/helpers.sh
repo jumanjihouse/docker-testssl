@@ -2,7 +2,7 @@
 verbosity=1
 
 # Helper functions.
-error() {
+err() {
   echo ERROR: $* >&2
 }
 
@@ -24,7 +24,7 @@ finish() {
   if [ ${_code} -eq 0 ]; then
     info $0 OK
   else
-    error $0 failed with exit code ${_code}
+    err $0 failed with exit code ${_code}
     exit ${_code}
   fi
 }
