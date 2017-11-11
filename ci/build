@@ -21,4 +21,4 @@ export DEV_TAG=\${DEV_BRANCH}-\${BUILD_DATE}-git-\${VCS_REF}
 EOF
 . ci/vars
 
-docker-compose build
+docker-compose -f docker-compose.ci.yaml build

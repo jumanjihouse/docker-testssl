@@ -1,0 +1,34 @@
+version: '2.1'
+
+services:
+  base: &base
+    extends:
+      file: docker-compose.yaml
+      service: testssl
+    image: testssl:base
+    build:
+      dockerfile: Dockerfile-base
+      context: src/
+      args:
+        - BUILD_DATE
+        - CI_BUILD_URL
+        - TARBALL
+        - VCS_REF
+
+  stable: &stable
+    <<: *base
+    image: testssl:${STABLE_BRANCH}
+    build:
+      dockerfile: Dockerfile
+      context: src/
+      args:
+        - BRANCH=${STABLE_BRANCH}
+
+  dev: &dev
+    <<: *base
+    image: testssl:${DEV_BRANCH}
+    build:
+      dockerfile: Dockerfile
+      context: src/
+      args:
+        - BRANCH=${DEV_BRANCH}

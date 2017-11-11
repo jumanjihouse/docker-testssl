@@ -29,6 +29,18 @@ How-To
 
 ### Run the image
 
+You can run the image using the [`docker-compose.yaml`](docker-compose.yaml)
+file in this git repo:
+
+    # Show help.
+    docker-compose run testssl --help
+
+    # Do a limited scan with a subset of options against one host.
+    docker-compose run testssl --heartbleed --ip one https://www.google.com/
+
+
+You can also run the image with the `docker` command directly:
+
     run_opts="
     -i
     -t
@@ -42,7 +54,7 @@ How-To
 
     docker run ${run_opts} quay.io/jumanjiman/testssl --help
 
-The above example uses `--read-only` and `--cap-drop all` as recommended by the
+The above examples use `--read-only` and `--cap-drop all` as recommended by the
 CIS Docker Security Benchmarks:
 
 * [CIS Security Benchmark for Docker 1.6](https://benchmarks.cisecurity.org/tools2/docker/CIS_Docker_1.6_Benchmark_v1.0.0.pdf)
