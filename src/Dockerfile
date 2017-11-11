@@ -11,3 +11,17 @@ RUN cd /tmp/ && \
     rm -fr /tmp/testssl.sh && \
     apk del --no-cache git && \
     chmod 0755 testssl.sh
+
+ARG CI_BUILD_URL
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL \
+    io.github.jumanjiman.ci-build-url=${CI_BUILD_URL} \
+    io.github.jumanjiman.version=${BRANCH} \
+    io.github.jumanjiman.build-date=${BUILD_DATE} \
+    io.github.jumanjiman.vcs-ref=${VCS_REF} \
+    io.github.jumanjiman.license="GPL v2" \
+    io.github.jumanjiman.docker.dockerfile="/src/Dockerfile" \
+    io.github.jumanjiman.vcs-type="Git" \
+    io.github.jumanjiman.vcs-url="https://github.com/jumanjihouse/docker-testssl.git"

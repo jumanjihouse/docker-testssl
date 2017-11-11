@@ -9,7 +9,6 @@ set -u
 echo
 echo '====> Check for things like trailing whitespace.'
 ci/check-files
-
 echo
 echo '====> Test that images have correct versions.'
 docker-compose -f docker-compose.ci.yaml run stable --version | grep "^[[:space:]]*testssl.sh.*${STABLE_BRANCH}"
@@ -22,6 +21,15 @@ docker-compose -f docker-compose.ci.yaml run dev    --heartbleed --ip one https:
 
 echo
 echo '====> Check labels.'
+# Ensure each image has labels.
+docker inspect \
+    -f '{{ index .Config.Labels "io.github.jumanjiman.vcs-ref" }}' \
+    testssl:${STABLE_BRANCH} | grep "${VCS_REF}"
+docker inspect \
+    -f '{{ index .Config.Labels "io.github.jumanjiman.vcs-ref" }}' \
+    testssl:${DEV_BRANCH} | grep "${VCS_REF}"
+
+# We only apply this label for hands-free builds in CI.
 if [ -n "${CIRCLECI:-}" ]; then
   docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
@@ -30,3 +38,4 @@ if [ -n "${CIRCLECI:-}" ]; then
     -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
     testssl:${DEV_BRANCH} | grep circleci.com
 fi
+

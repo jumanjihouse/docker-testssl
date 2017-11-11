@@ -10,10 +10,7 @@ services:
       dockerfile: Dockerfile-base
       context: src/
       args:
-        - BUILD_DATE
-        - CI_BUILD_URL
         - TARBALL
-        - VCS_REF
 
   stable: &stable
     <<: *base
@@ -23,6 +20,9 @@ services:
       context: src/
       args:
         - BRANCH=${STABLE_BRANCH}
+        - BUILD_DATE
+        - CI_BUILD_URL
+        - VCS_REF
 
   dev: &dev
     <<: *base
@@ -32,3 +32,6 @@ services:
       context: src/
       args:
         - BRANCH=${DEV_BRANCH}
+        - BUILD_DATE
+        - CI_BUILD_URL
+        - VCS_REF
