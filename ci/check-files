@@ -51,7 +51,7 @@ check_binary() {
   file="$1"
   if [[ "${file}" =~ assets/ ]]; then
     : # Binaries are allowed in the assets directory.
-  elif [[ $(stat --printf=%s "${file}") -eq 0 ]]; then
+  elif [[ "$(stat -c %s "${file}")" =~ "^0$" ]]; then
     : # Zero-sized files are not binary.
   elif $(is_binary "${file}"); then
     err \"${file}\" is a binary file
