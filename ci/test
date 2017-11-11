@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+set -u
 
 . ci/helpers.sh
 
@@ -21,7 +22,7 @@ docker-compose run dev    --heartbleed --ip one https://www.google.com/
 
 echo
 echo '====> Check labels.'
-if [ -n "${CIRCLECI}" ]; then
+if [ -n "${CIRCLECI:-}" ]; then
   docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
     testssl:${STABLE_BRANCH} | grep circleci.com

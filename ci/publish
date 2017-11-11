@@ -1,6 +1,7 @@
 #!/bin/bash
 # vim: set sw=2 ts=2 ai et:
 set -e
+set -u
 
 . ci/helpers.sh
 
