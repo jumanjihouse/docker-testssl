@@ -93,6 +93,23 @@ and see [CONTRIBUTING.md](CONTRIBUTING.md).
 :warning: All build configuration variables are in [`ci/build`](ci/build).
 
 
+About the build
+---------------
+
+`ci/build` uses `docker-compose` to create a "base" image
+that contains the statically-linked version of openssl from
+[https://testssl.sh/](https://testssl.sh/).
+From the common base, `ci/build` creates two runtime images:
+
+* **stable** version of the `testssl.sh` script
+* **dev** version of the `testssl.sh` script
+
+When the build happens against the master branch on CircleCI,
+the `ci/publish` script pushes both the stable and dev images to
+[Quay.io](https://quay.io/repository/jumanjiman/testssl?tab=tags).
+It also pushes a "latest" tag, which refers to the stable version.
+
+
 Operational status of SaaS providers
 ------------------------------------
 
