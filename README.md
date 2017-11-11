@@ -1,13 +1,22 @@
 Test TLS/SSL of arbitrary services and ports
 ============================================
 
-Build status for master branch: [![Circle CI](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master.svg?style=svg&circle-token=21344117bb3bc61b8096a1a1b76514ab7b8a3f85)](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master)
+Overview
+--------
 
-Docker image: https://quay.io/repository/jumanjiman/testssl
+This repo provides docker images for `testssl.sh`,
+a free command line tool to check a service
+on any port for the support of TLS/SSL ciphers,
+protocols, recent cryptographic flaws, and more.
+Each image provides everything needed to run
+`testssl.sh` the way upstream intends it to be run.
 
-Docker source: https://github.com/jumanjihouse/docker-testssl
+Build status for master branch: [![Circle CI](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master.svg?style=svg&circle-token=21344117bb3bc61b8096a1a1b76514ab7b8a3f85)](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master)<br/>
+Docker image: https://quay.io/repository/jumanjiman/testssl<br/>
+Docker source: https://github.com/jumanjihouse/docker-testssl<br/>
+Upstream source: https://github.com/drwetter/testssl.sh<br/>
 
-Upstream source: https://github.com/drwetter/testssl.sh
+:warning: The **latest** tag at quay refers to the **stable** version.
 
 
 How-To
@@ -19,6 +28,18 @@ How-To
 
 
 ### Run the image
+
+You can run the image using the [`docker-compose.yaml`](docker-compose.yaml)
+file in this git repo:
+
+    # Show help.
+    docker-compose run testssl --help
+
+    # Do a limited scan with a subset of options against one host.
+    docker-compose run testssl --heartbleed --ip one https://www.google.com/
+
+
+You can also run the image with the `docker` command directly:
 
     run_opts="
     -i
@@ -33,7 +54,7 @@ How-To
 
     docker run ${run_opts} quay.io/jumanjiman/testssl --help
 
-The above example uses `--read-only` and `--cap-drop all` as recommended by the
+The above examples use `--read-only` and `--cap-drop all` as recommended by the
 CIS Docker Security Benchmarks:
 
 * [CIS Security Benchmark for Docker 1.6](https://benchmarks.cisecurity.org/tools2/docker/CIS_Docker_1.6_Benchmark_v1.0.0.pdf)
@@ -82,6 +103,23 @@ Fork [this repo](https://github.com/jumanjihouse/docker-testssl)
 and see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 :warning: All build configuration variables are in [`ci/build`](ci/build).
+
+
+About the build
+---------------
+
+`ci/build` uses `docker-compose` to create a "base" image
+that contains the statically-linked version of openssl from
+[https://testssl.sh/](https://testssl.sh/).
+From the common base, `ci/build` creates two runtime images:
+
+* **stable** version of the `testssl.sh` script
+* **dev** version of the `testssl.sh` script
+
+When the build happens against the master branch on CircleCI,
+the `ci/publish` script pushes both the stable and dev images to
+[Quay.io](https://quay.io/repository/jumanjiman/testssl?tab=tags).
+It also pushes a "latest" tag, which refers to the stable version.
 
 
 Operational status of SaaS providers

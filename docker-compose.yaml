@@ -1,16 +1,9 @@
 version: '2.1'
 
 services:
-  base: &base
-    image: testssl:base
-    build:
-      dockerfile: Dockerfile-base
-      context: src/
-      args:
-        - BUILD_DATE
-        - CI_BUILD_URL
-        - TARBALL
-        - VCS_REF
+  testssl: &defaults
+    image: quay.io/jumanjiman/testssl:latest
+    command: "--help"
     stdin_open: true
     tty: true
     read_only: true
@@ -19,21 +12,3 @@ services:
     cpu_shares: 512
     cap_drop:
       - all
-
-  stable: &stable
-    <<: *base
-    image: testssl:${STABLE_BRANCH}
-    build:
-      dockerfile: Dockerfile
-      context: src/
-      args:
-        - BRANCH=${STABLE_BRANCH}
-
-  dev: &dev
-    <<: *base
-    image: testssl:${DEV_BRANCH}
-    build:
-      dockerfile: Dockerfile
-      context: src/
-      args:
-        - BRANCH=${DEV_BRANCH}
