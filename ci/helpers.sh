@@ -1,17 +1,21 @@
+# Defaults.
+verbosity=1
+
+# Helper functions.
 error() {
-  {
-    echo
-    echo ERROR: $*
-    echo
-  } >&2
+  echo ERROR: $* >&2
 }
 
 info() {
-  {
-    echo
-    echo INFO: $*
-    echo
-  } >&2
+  if [[ ${verbosity} -ge 1 ]]; then
+    echo INFO: $* >&2
+  fi
+}
+
+debug() {
+  if [[ ${verbosity} -ge 2 ]]; then
+    echo DEBUG: $* >&2
+  fi
 }
 
 finish() {
@@ -25,4 +29,5 @@ finish() {
   fi
 }
 
+# Traps.
 trap finish EXIT

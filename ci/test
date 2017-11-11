@@ -5,14 +5,21 @@ set -e
 
 . ci/vars
 
+echo
+echo '====> Check for things like trailing whitespace.'
+ci/check-files
+
+echo
 echo '====> Test that images have correct versions.'
 docker-compose run stable --version | grep "^[[:space:]]*testssl.sh.*${STABLE_BRANCH}"
 docker-compose run dev    --version | grep "^[[:space:]]*testssl.sh.*${DEV_BRANCH}"
 
+echo
 echo '====> Test SSL of a website.'
 docker-compose run stable --heartbleed --ip one https://www.google.com/
 docker-compose run dev    --heartbleed --ip one https://www.google.com/
 
+echo
 echo '====> Check labels.'
 if [ -n "${CIRCLECI}" ]; then
   docker inspect \
