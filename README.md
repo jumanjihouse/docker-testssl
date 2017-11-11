@@ -1,13 +1,22 @@
 Test TLS/SSL of arbitrary services and ports
 ============================================
 
-Build status for master branch: [![Circle CI](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master.svg?style=svg&circle-token=21344117bb3bc61b8096a1a1b76514ab7b8a3f85)](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master)
+Overview
+--------
 
-Docker image: https://quay.io/repository/jumanjiman/testssl
+This repo provides docker images for `testssl.sh`,
+a free command line tool to check a service
+on any port for the support of TLS/SSL ciphers,
+protocols, recent cryptographic flaws, and more.
+Each image provides everything needed to run
+`testssl.sh` the way upstream intends it to be run.
 
-Docker source: https://github.com/jumanjihouse/docker-testssl
+Build status for master branch: [![Circle CI](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master.svg?style=svg&circle-token=21344117bb3bc61b8096a1a1b76514ab7b8a3f85)](https://circleci.com/gh/jumanjihouse/docker-testssl/tree/master)<br/>
+Docker image: https://quay.io/repository/jumanjiman/testssl<br/>
+Docker source: https://github.com/jumanjihouse/docker-testssl<br/>
+Upstream source: https://github.com/drwetter/testssl.sh<br/>
 
-Upstream source: https://github.com/drwetter/testssl.sh
+:warning: The **latest** tag at quay refers to the **stable** version.
 
 
 How-To
