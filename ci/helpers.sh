@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 # Defaults.
 verbosity=1
 

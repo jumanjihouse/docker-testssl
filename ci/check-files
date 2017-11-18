@@ -22,7 +22,7 @@ main() {
       continue # A git submodule appears as a directory in "git ls-files".
     fi
     check_binary "${file}"        || code=1
-    check_shell_syntax "${file}"  || code=1
+    check_shell "${file}"         || code=1
     check_whitespace "${file}"    || code=1
   done < <(git ls-files -z)
   return ${code}
@@ -59,10 +59,14 @@ check_binary() {
   fi
 }
 
-check_shell_syntax() {
+check_shell() {
   file="$1"
   if $(is_shell_script "${file}"); then
     bash -n "${file}"
+    if command -v shellcheck &> /dev/null; then
+      # https://github.com/koalaman/shellcheck
+      shellcheck "${file}"
+    fi
   fi
 }
 
@@ -82,6 +86,14 @@ check_whitespace() {
     return 1
   fi
 }
+
+################################################################################
+# Program execution starts here.
+################################################################################
+
+# Default values.
+readonly LOCAL_SHELLCHECK_EXCLUDES="-e SC1091"
+export SHELLCHECK_OPTS="${SHELLCHECK_OPTS:-"${LOCAL_SHELLCHECK_EXCLUDES=}"}"
 
 # http://wiki.bash-hackers.org/howto/getopts_tutorial
 while getopts ":dhv:" opt; do
