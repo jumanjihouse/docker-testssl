@@ -95,6 +95,8 @@ check_shell() {
   if command -v shellcheck &> /dev/null; then
     # https://github.com/koalaman/shellcheck
     shellcheck "${file}" && RC=0
+  else
+    warn unable to find \"shellcheck\" in \$PATH ... skipping shellcheck checks
   fi
 
   return ${RC}

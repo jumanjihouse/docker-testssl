@@ -14,6 +14,12 @@ info() {
   fi
 }
 
+warn() {
+  if [[ ${verbosity} -ge 1 ]]; then
+    echo WARN: "$*" >&2
+  fi
+}
+
 debug() {
   if [[ ${verbosity} -ge 2 ]]; then
     echo DEBUG: "$*" >&2
