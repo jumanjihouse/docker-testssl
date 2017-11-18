@@ -7,18 +7,19 @@ set -u
 
 . ci/vars
 
-docker login -u ${user} -p ${pass} quay.io
+# shellcheck disable=SC2154
+docker login -u "${user}" -p "${pass}" quay.io
 
 # Tag and push dev image.
-docker tag testssl:${DEV_BRANCH} quay.io/jumanjiman/testssl:${DEV_TAG}
-docker push quay.io/jumanjiman/testssl:${DEV_TAG}
+docker tag testssl:"${DEV_BRANCH}" quay.io/jumanjiman/testssl:"${DEV_TAG}"
+docker push quay.io/jumanjiman/testssl:"${DEV_TAG}"
 
 # Tag and push stable image.
-docker tag testssl:${STABLE_BRANCH} quay.io/jumanjiman/testssl:${STABLE_TAG}
-docker push quay.io/jumanjiman/testssl:${STABLE_TAG}
+docker tag testssl:"${STABLE_BRANCH}" quay.io/jumanjiman/testssl:"${STABLE_TAG}"
+docker push quay.io/jumanjiman/testssl:"${STABLE_TAG}"
 
 # Tag and push stable image as "latest".
-docker tag testssl:${STABLE_BRANCH} quay.io/jumanjiman/testssl:latest
+docker tag testssl:"${STABLE_BRANCH}" quay.io/jumanjiman/testssl:latest
 docker push quay.io/jumanjiman/testssl:latest
 
 docker logout quay.io

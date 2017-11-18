@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 set -u
 
@@ -25,19 +25,19 @@ echo '====> Check labels.'
 # Ensure each image has labels.
 docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.vcs-ref" }}' \
-    testssl:${STABLE_BRANCH} | grep "${VCS_REF}"
+    testssl:"${STABLE_BRANCH}" | grep "${VCS_REF}"
 docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.vcs-ref" }}' \
-    testssl:${DEV_BRANCH} | grep "${VCS_REF}"
+    testssl:"${DEV_BRANCH}" | grep "${VCS_REF}"
 
 # We only apply this label for hands-free builds in CI.
 if is_ci; then
   docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
-    testssl:${STABLE_BRANCH} | grep circleci.com
+    testssl:"${STABLE_BRANCH}" | grep circleci.com
   docker inspect \
     -f '{{ index .Config.Labels "io.github.jumanjiman.ci-build-url" }}' \
-    testssl:${DEV_BRANCH} | grep circleci.com
+    testssl:"${DEV_BRANCH}" | grep circleci.com
 fi
 
 echo
