@@ -8,7 +8,7 @@ set -u
 
 echo
 echo '====> Check for things like trailing whitespace.'
-ci/check-files
+ci/check-files -d
 
 echo
 echo '====> Test that images have correct versions.'
