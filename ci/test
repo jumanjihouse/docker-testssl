@@ -9,6 +9,7 @@ set -u
 echo
 echo '====> Check for things like trailing whitespace.'
 ci/check-files
+
 echo
 echo '====> Test that images have correct versions.'
 docker-compose -f docker-compose.ci.yaml run stable --version | grep "^[[:space:]]*testssl.sh.*${STABLE_BRANCH}"
@@ -39,3 +40,5 @@ if is_ci; then
     testssl:${DEV_BRANCH} | grep circleci.com
 fi
 
+echo
+echo
