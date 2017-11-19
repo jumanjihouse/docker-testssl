@@ -1,45 +1,47 @@
 #!/bin/bash
 set -e
 set -u
-
-. ci/helpers.sh
+set -o pipefail
 
 usage() {
   cat <<EOF
-  Usage: "$0" [-dh] [-v level]
-    -d          debug, shorthand for -v2
-    -h          help (this screen)
-    -v level    verbosity, where level is 0, 1, or 2
+  Usage: "$0" [-dh] [-v VERBOSITY]
+    -d            debug, shorthand for -v2
+    -h            help (this screen)
+    -v VERBOSITY, where VERBOSITY is 0, 1, or 2
 EOF
 }
 
 main() {
-  local code=0
+  declare -i RC=0
 
   # https://github.com/koalaman/shellcheck/wiki/SC2044
-  while IFS= read -r -d '' file; do
+  while IFS=$'' read -r -d '' file; do
     debug checking "${file}"
     if is_directory "${file}"; then
       continue # A git submodule appears as a directory in "git ls-files".
     fi
-    check_binary "${file}"        || code=1
-    check_shell "${file}"         || code=1
-    check_whitespace "${file}"    || code=1
+    check_binary     "${file}" || RC=1
+    check_shell      "${file}" || RC=1
+    check_whitespace "${file}" || RC=1
   done < <(git ls-files -z)
-  return ${code}
+
+  return ${RC}
 }
 
 is_binary() {
-  local file="$1"
-  readonly file
-  local RC=1
+  declare -r file="$1"
+  declare -i RC=1
+  declare output
 
-  _output="$(file --mime --dereference "${file}")"
-  if [[ ${_output} =~ inode/x-empty ]]; then
+  output="$(file --mime --dereference "${file}")"
+  readonly output
+
+  if [[ ${output} =~ inode/x-empty ]]; then
     : # Don't consider zero-sized file to be binary.
   elif [[ "$(stat -c %s "${file}")" =~ "^0$" ]]; then
     : # Don't consider zero-sized file to be binary.
-  elif [[ ${_output} =~ binary$ ]]; then
+  elif [[ ${output} =~ binary$ ]]; then
     RC=0
   fi
 
@@ -47,15 +49,13 @@ is_binary() {
 }
 
 is_directory() {
-  local file="$1"
-  readonly file
+  declare -r file="$1"
   file --mime --dereference "${file}" | grep 'directory' &> /dev/null
 }
 
 is_shell_script() {
-  local file="$1"
-  readonly file
-  local RC=1
+  declare -r file="$1"
+  declare -i RC=1
 
   if file --mime --dereference "${file}" | grep 'shellscript' &> /dev/null; then
     RC=0
@@ -67,9 +67,8 @@ is_shell_script() {
 }
 
 check_binary() {
-  local file="$1"
-  readonly file
-  local RC=0
+  declare -r file="$1"
+  declare -i RC=0
 
   if [[ "${file}" =~ assets/ ]]; then
     RC=0 # Binaries are allowed in the assets directory.
@@ -82,9 +81,8 @@ check_binary() {
 }
 
 check_shell() {
-  local file="$1"
-  readonly file
-  local RC=1
+  declare -r file="$1"
+  declare -i RC=1
 
   if ! is_shell_script "${file}"; then
     return 0
@@ -103,16 +101,15 @@ check_shell() {
 }
 
 check_whitespace() {
-  local file="$1"
-  readonly file
-  local RC=1
+  declare -r file="$1"
+  declare -i RC=1
 
   if is_binary "${file}"; then
     # Binary files can have trailing whitespace.
     return 0
   fi
 
-  if [[ ${verbosity} -ge 2 ]]; then
+  if [[ ${VERBOSITY} -ge 2 ]]; then
     grep -E '\s$' "${file}" -n
   else
     grep -E '\s$' "${file}" &> /dev/null
@@ -128,7 +125,7 @@ check_whitespace() {
       # Did not find whitespace.
       RC=0
       ;;
-    2)
+    2|*)
       # grep command failed.
       exit 2
       ;;
@@ -145,18 +142,20 @@ check_whitespace() {
 readonly LOCAL_SHELLCHECK_EXCLUDES="-e SC1091"
 export SHELLCHECK_OPTS="${SHELLCHECK_OPTS:-"${LOCAL_SHELLCHECK_EXCLUDES=}"}"
 
+. ci/helpers.sh
+
 # http://wiki.bash-hackers.org/howto/getopts_tutorial
 while getopts ":dhv:" opt; do
   case ${opt} in
     d)
-      verbosity=2
+      VERBOSITY=2
       ;;
     h)
       usage
       exit 0
       ;;
     v)
-      verbosity=${OPTARG}
+      VERBOSITY=${OPTARG}
       ;;
     :)
       usage
@@ -170,6 +169,7 @@ while getopts ":dhv:" opt; do
       ;;
   esac
 done
+readonly VERBOSITY
 
 # After the shift, $* contains non-option arguments.
 shift $((OPTIND-1))

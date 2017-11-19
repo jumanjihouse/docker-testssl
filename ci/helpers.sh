@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 
 # Defaults.
-verbosity=1
+declare -i VERBOSITY=${VERBOSITY:-1}
 
 # Helper functions.
 err() {
@@ -9,41 +9,40 @@ err() {
 }
 
 info() {
-  if [[ ${verbosity} -ge 1 ]]; then
+  if [[ ${VERBOSITY} -ge 1 ]]; then
     echo INFO: "$*" >&2
   fi
 }
 
 warn() {
-  if [[ ${verbosity} -ge 1 ]]; then
+  if [[ ${VERBOSITY} -ge 1 ]]; then
     echo WARN: "$*" >&2
   fi
 }
 
 debug() {
-  if [[ ${verbosity} -ge 2 ]]; then
+  if [[ ${VERBOSITY} -ge 2 ]]; then
     echo DEBUG: "$*" >&2
   fi
 }
 
 finish() {
-  local _code=$?
-  readonly _code
+  declare -ri RC=$?
 
-  if [ ${_code} -eq 0 ]; then
+  if [ ${RC} -eq 0 ]; then
     info "$0" OK
   else
-    err "$0" failed with exit code ${_code}
-    exit ${_code}
+    err "$0" failed with exit code ${RC}
+    exit ${RC}
   fi
 }
 
 handle_err() {
-  local RC=$?
+  declare -ri RC=$?
 
   # $BASH_COMMAND contains the command that was being executed at the time of the trap
   # ${BASH_LINENO[0]} contains the line number in the script of that command
-  err "${RC} from \"${BASH_COMMAND}\" on line ${BASH_LINENO[0]}"
+  err "exit code ${RC} from \"${BASH_COMMAND}\" on line ${BASH_LINENO[0]}"
 
   exit ${RC}
 }
