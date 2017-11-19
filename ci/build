@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 set -u
+set -o pipefail
+
+################################################################################
+# Build the Docker image.
+# Invoke as "ci/build".
+################################################################################
 
 . ci/helpers.sh
 
@@ -13,14 +19,15 @@ export DEV_BRANCH=2.9dev
 
 # You probably do not need to touch these.
 cat > ci/vars <<-EOF
-export TARBALL=${TARBALL}
-export STABLE_BRANCH=${STABLE_BRANCH}
-export DEV_BRANCH=${DEV_BRANCH}
-export BUILD_DATE=$(date +%Y%m%dT%H%M)
-export CI_BUILD_URL=${CIRCLE_BUILD_URL:-}
-export VCS_REF=$(git rev-parse --short HEAD)
-export STABLE_TAG=\${STABLE_BRANCH}-\${BUILD_DATE}-git-\${VCS_REF}
-export DEV_TAG=\${DEV_BRANCH}-\${BUILD_DATE}-git-\${VCS_REF}
+# shellcheck shell=bash
+declare -rx TARBALL=${TARBALL}
+declare -rx STABLE_BRANCH=${STABLE_BRANCH}
+declare -rx DEV_BRANCH=${DEV_BRANCH}
+declare -rx BUILD_DATE=$(date +%Y%m%dT%H%M)
+declare -rx CI_BUILD_URL=${CIRCLE_BUILD_URL:-}
+declare -rx VCS_REF=$(git rev-parse --short HEAD)
+declare -rx STABLE_TAG=\${STABLE_BRANCH}-\${BUILD_DATE}-git-\${VCS_REF}
+declare -rx DEV_TAG=\${DEV_BRANCH}-\${BUILD_DATE}-git-\${VCS_REF}
 EOF
 
 . ci/vars

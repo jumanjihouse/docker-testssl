@@ -1,5 +1,9 @@
 # shellcheck shell=bash
 
+################################################################################
+# Library of helper functions to be sourced by ci scripts.
+################################################################################
+
 # Defaults.
 declare -i VERBOSITY=${VERBOSITY:-1}
 

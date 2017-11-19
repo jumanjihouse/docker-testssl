@@ -3,6 +3,14 @@ set -e
 set -u
 set -o pipefail
 
+################################################################################
+# Check files in a git repo.
+#
+# Binaries are allowed in an "assets" directory and nowhere else.
+# Shell scripts must conform to shellcheck.
+# Trailing whitespace is not allowed.
+################################################################################
+
 usage() {
   cat <<EOF
   Usage: "$0" [-dh] [-v VERBOSITY]
@@ -82,17 +90,17 @@ check_binary() {
 
 check_shell() {
   declare -r file="$1"
-  declare -i RC=1
+  declare -i RC=0
 
   if ! is_shell_script "${file}"; then
     return 0
   fi
 
-  bash -n "${file}" && RC=0
+  bash -n "${file}" || RC=1
 
   if command -v shellcheck &> /dev/null; then
     # https://github.com/koalaman/shellcheck
-    shellcheck "${file}" && RC=0
+    shellcheck "${file}" || RC=1
   else
     warn unable to find \"shellcheck\" in \$PATH ... skipping shellcheck checks
   fi
@@ -140,7 +148,7 @@ check_whitespace() {
 
 # Default values.
 readonly LOCAL_SHELLCHECK_EXCLUDES="-e SC1091"
-export SHELLCHECK_OPTS="${SHELLCHECK_OPTS:-"${LOCAL_SHELLCHECK_EXCLUDES=}"}"
+declare -rx SHELLCHECK_OPTS="${SHELLCHECK_OPTS:-"${LOCAL_SHELLCHECK_EXCLUDES=}"}"
 
 . ci/helpers.sh
 

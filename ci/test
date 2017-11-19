@@ -1,10 +1,19 @@
 #!/bin/bash
 set -e
 set -u
+set -o pipefail
+
+################################################################################
+# Run the test harness. Invoke as "ci/test".
+################################################################################
 
 . ci/helpers.sh
 
 . ci/vars
+
+if command -v shellcheck &> /dev/null; then
+  shellcheck ci/vars
+fi
 
 echo
 echo '====> Check for things like trailing whitespace.'
