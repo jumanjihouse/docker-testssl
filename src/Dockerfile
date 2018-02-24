@@ -16,7 +16,9 @@ ARG CI_BUILD_URL
 ARG BUILD_DATE
 ARG VCS_REF
 
+# https://support.coreos.com/hc/en-us/articles/115001384693-Tag-Expiration
 LABEL \
+    quay.expires-after=24w \
     io.github.jumanjiman.ci-build-url=${CI_BUILD_URL} \
     io.github.jumanjiman.version=${BRANCH} \
     io.github.jumanjiman.build-date=${BUILD_DATE} \

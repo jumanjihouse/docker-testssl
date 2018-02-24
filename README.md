@@ -122,6 +122,20 @@ the `ci/publish` script pushes both the stable and dev images to
 It also pushes a "latest" tag, which refers to the stable version.
 
 
+Stale tags
+----------
+
+Old images tend to have vulnerabilities.<br/>
+Quay has a feature to use a special label, `quay.expires-after`, to expire tags.
+This repo applies the label to images so that old images get deleted automatically.
+
+See https://support.coreos.com/hc/en-us/articles/115001384693-Tag-Expiration
+for more information about the Quay feature.<br/>
+See [src/Dockerfile](src/Dockerfile) for the current value of the label.
+
+:warning: This is a Quay feature, not a docker feature.
+
+
 Operational status of SaaS providers
 ------------------------------------
 

@@ -5,8 +5,8 @@ RUN apk --update-cache upgrade && \
       bash \
       bind-tools \
       coreutils \
-      curl \
-      ncurses \
+      'curl>=7.58.0-r0' \
+      'ncurses>=6.0_p20170930-r0' \
       tzdata \
       && \
     rm -f /var/cache/apk/*
