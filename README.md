@@ -1,6 +1,19 @@
 Test TLS/SSL of arbitrary services and ports
 ============================================
 
+- [Overview](#overview)
+- [How-To](#how-to)
+  - [Pull an already-built image](#pull-an-already-built-image)
+  - [Run the image](#run-the-image)
+  - [Build and test images locally](#build-and-test-images-locally)
+  - [View labels](#view-labels)
+  - [Contribute](#contribute)
+- [About the build](#about-the-build)
+- [Stale tags](#stale-tags)
+- [Operational status of SaaS providers](#operational-status-of-saas-providers)
+- [License](#license)
+
+
 Overview
 --------
 
