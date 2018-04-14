@@ -1,0 +1,37 @@
+---
+
+fail_fast: false
+
+repos:
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.11.1
+    hooks:
+      - id: yamllint
+        args: ['--format', 'parsable', '--strict']
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v1.2.3
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-symlinks
+      - id: check-vcs-permalinks
+      - id: detect-private-key
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.1.5
+    hooks:
+      - id: forbid-crlf
+      - id: forbid-tabs
+
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 1.5.1
+    hooks:
+      - id: forbid-binary
+        exclude: ^assets/docker_workflow.png$
+      - id: git-check  # Configure in .gitattributes
+      - id: git-dirty  # Configure in .gitignore
+      - id: shellcheck
+      - id: shfmt

@@ -78,6 +78,8 @@ On a host, such as devenv:
     # Run the tests.
     ci/test
 
+Note: The test harness requires Python and the `pip` command.
+
 
 ### View labels
 

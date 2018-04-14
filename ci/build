@@ -18,7 +18,7 @@ export STABLE_BRANCH=2.9.5
 export DEV_BRANCH=2.9dev
 
 # You probably do not need to touch these.
-cat > ci/vars <<-EOF
+cat >ci/vars <<-EOF
 # shellcheck shell=bash
 declare -rx TARBALL=${TARBALL}
 declare -rx STABLE_BRANCH=${STABLE_BRANCH}
