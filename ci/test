@@ -23,7 +23,7 @@ pre-commit run --all-files --verbose
 echo
 echo '====> Test that images have correct versions.'
 docker-compose -f docker-compose.ci.yaml run stable --version | grep "^[[:space:]]*testssl.sh.*${STABLE_BRANCH}"
-docker-compose -f docker-compose.ci.yaml run dev --version | grep "^[[:space:]]*testssl.sh.*${DEV_BRANCH}"
+docker-compose -f docker-compose.ci.yaml run dev --version | grep -E "^[[:space:]]*testssl.sh.*(${DEV_BRANCH}|beta)"
 
 echo
 echo '====> Test SSL of a website.'
