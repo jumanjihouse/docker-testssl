@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.10.3
 
 RUN apk --update-cache upgrade && \
     apk add \
@@ -7,6 +7,7 @@ RUN apk --update-cache upgrade && \
       coreutils \
       'curl>=7.58.0-r0' \
       'ncurses>=6.0_p20170930-r0' \
+      procps \
       tzdata \
       && \
     rm -f /var/cache/apk/*
