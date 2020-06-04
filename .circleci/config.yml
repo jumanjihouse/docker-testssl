@@ -1,11 +1,11 @@
 ---
 # https://circleci.com/docs/docker
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
       # https://github.com/jumanjihouse/cci/pulls?q=is%3Apr+is%3Aclosed
-      - image: jumanjiman/cci:20180408T1654-git-5806ceb
+      - image: jumanjiman/cci:20200604.0031
 
     working_directory: ~/workdir/
 
